@@ -25,6 +25,6 @@ jobs:
           filename: vma-${{ matrix.target }}.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: build
+          name: vma-${{ matrix.target }}.zip
           path: vma-${{ matrix.target }}.zip
           
