@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch: 
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [aarch64-windows-gnu,x64-86-windows-gnu,aarch64-linux-musl,x64-86-linux-musl]
+    runs-on: ubuntu-latest
+    name: Zig ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Zig
+        uses: mlugg/setup-zig@v2
+        with:
+          zig-version: 0.15.1
+      - run: zig build -Dtarget=${{ matrix.target }} --prefix out/
+      - name: Zip Artifacts
+        uses: TheDoctor0/zip-release@0.7.6
+        with:
+          type: 'zip'
+          path: 'out/'
+          filename: vma-${{ matrix.target }}.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: vma-${{ matrix.target }}.zip
+          
