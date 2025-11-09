@@ -15,16 +15,10 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          zig-version: 0.15.1
+          version: 0.15.1
       - run: zig build -Dtarget=${{ matrix.target }} --prefix out/
-      - name: Zip Artifacts
-        uses: TheDoctor0/zip-release@0.7.6
-        with:
-          type: 'zip'
-          path: 'out/'
-          filename: vma-${{ matrix.target }}.zip
       - uses: actions/upload-artifact@v4
         with:
           name: vma-${{ matrix.target }}.zip
-          path: vma-${{ matrix.target }}.zip
+          path: 'out/'
           
