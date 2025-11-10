@@ -17,7 +17,7 @@ jobs:
         uses: mlugg/setup-zig@v2
         with:
           version: 0.15.1
-      - run: zig build -Dtarget=${{ matrix.target }} --prefix out/
+      - run: zig build -Dtarget=${{ matrix.target }} --prefix out/ -Doptimize=ReleaseSafe
       - uses: actions/upload-artifact@v4
         with:
           name: vma-${{ matrix.target }}.zip
